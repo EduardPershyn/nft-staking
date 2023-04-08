@@ -1,17 +1,18 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity 0.8.18;
+
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./Erc20_reward.sol";
 
 contract Game is IERC721Receiver {
+    address public immutable owner;
 
-    address public owner;
-
-    ERC721 public itemNft;
-    Erc20_reward public rewardToken;
+    ERC721 public immutable itemNft;
+    Erc20_reward public immutable rewardToken;
 
     uint256 public constant CLAIM_REWARD = 10 ether;
-    uint256 public constant DEFAULT_STAKE_PERIOD = 24 hours;
-    uint256 public stakePeriod = DEFAULT_STAKE_PERIOD;
+    uint256 public constant STAKE_PERIOD = 24 hours;
 
     mapping(uint256 => address) public originalOwner;
     mapping(uint256 => uint256) public claimedTime;
@@ -22,17 +23,11 @@ contract Game is IERC721Receiver {
         rewardToken = rewardToken_;
     }
 
-    function setStakePeriod(uint256 period_) external {
-        require(msg.sender == owner, "Game: restricted");
-        require(period_ > 0, "Game: period should be more than zero");
-        stakePeriod = period_;
-    }
-
     function onERC721Received(
-        address operator,
+        address,
         address from,
         uint256 tokenId,
-        bytes calldata data
+        bytes calldata
     ) external returns (bytes4) {
         require(msg.sender == address(itemNft), "Game: we expected other nft");
 
@@ -42,32 +37,33 @@ contract Game is IERC721Receiver {
         return IERC721Receiver.onERC721Received.selector;
     }
 
-//    function stakeNFT(uint256 tokenId) external {
-//        originalOwner[tokenId] = msg.sender;
-//        itemNft.safeTransferFrom(msg.sender, address(this), tokenId);
-//    }
-
     function withdrawNft(uint256 tokenId) external {
-        require(msg.sender == originalOwner[tokenId], "Game: Only original owner can withdraw");
+        require(
+            msg.sender == originalOwner[tokenId],
+            "Game: Only original owner can withdraw"
+        );
 
-        itemNft.safeTransferFrom(address(this), msg.sender, tokenId);
         originalOwner[tokenId] = address(0);
+        itemNft.safeTransferFrom(address(this), msg.sender, tokenId);
     }
 
     function claimReward(uint256 tokenId) external {
-        require(msg.sender == originalOwner[tokenId], "Game: Only original owner can claim reward");
+        require(
+            msg.sender == originalOwner[tokenId],
+            "Game: Only original owner can claim reward"
+        );
 
         uint256 timePassed = block.timestamp - claimedTime[tokenId];
-        uint256 rewardToClaim = timePassed / stakePeriod * CLAIM_REWARD;
+        uint256 rewardToClaim = (timePassed / STAKE_PERIOD) * CLAIM_REWARD;
         if (rewardToClaim > 0) {
-            sendReward(msg.sender, rewardToClaim);
+            _sendReward(msg.sender, rewardToClaim);
 
-            uint256 unclaimedTime = timePassed % stakePeriod;
+            uint256 unclaimedTime = timePassed % STAKE_PERIOD;
             claimedTime[tokenId] = block.timestamp - unclaimedTime;
         }
     }
 
-    function sendReward(address to, uint256 amount) internal {
+    function _sendReward(address to, uint256 amount) internal {
         rewardToken.mint(amount);
         rewardToken.transfer(to, amount);
     }
