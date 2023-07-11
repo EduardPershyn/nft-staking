@@ -1,16 +1,23 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.18;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
-contract Erc721_staking is ERC721 {
+contract Erc721_staking is ERC721Upgradeable {
+    /// @custom:oz-upgrades-unsafe-allow state-variable-immutable
     address private immutable deployer;
 
     uint256 public tokenSupply;
     uint256 public constant PRICE = 1 ether;
 
-    constructor() ERC721("staking token", "STK") {
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
         deployer = msg.sender;
+    }
+
+    function initialize() external initializer {
+        __ERC721_init("staking token", "STK");
     }
 
     function mint() external payable {

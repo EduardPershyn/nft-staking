@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.18;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./Erc20_reward.sol";
+import "./Erc721_staking.sol";
 
-contract Game is IERC721Receiver {
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+
+contract Game is Initializable, IERC721Receiver {
+    /// @custom:oz-upgrades-unsafe-allow state-variable-immutable
     address public immutable owner;
 
-    ERC721 public immutable itemNft;
-    Erc20_reward public immutable rewardToken;
+    Erc721_staking public itemNft;
+    Erc20_reward public rewardToken;
 
     uint256 public constant CLAIM_REWARD = 10 ether;
     uint256 public constant STAKE_PERIOD = 24 hours;
@@ -17,8 +20,12 @@ contract Game is IERC721Receiver {
     mapping(uint256 => address) public originalOwner;
     mapping(uint256 => uint256) public claimedTime;
 
-    constructor(ERC721 itemNft_, Erc20_reward rewardToken_) {
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
         owner = msg.sender;
+    }
+
+    function initialize(Erc721_staking itemNft_, Erc20_reward rewardToken_) external initializer {
         itemNft = itemNft_;
         rewardToken = rewardToken_;
     }

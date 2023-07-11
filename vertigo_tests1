@@ -1,0 +1,266 @@
+Mutation testing report:
+Number of mutations:    24
+Killed:                 19 / 24
+
+Mutations:
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc20_reward.sol
+    Line nr: 14
+    Result: Killed
+    Original line:
+                 require(msg.sender == _owner, "Erc20_reward: restricted to owner");
+
+    Mutated line:
+                 require(msg.sender != _owner, "Erc20_reward: restricted to owner");
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc20_reward.sol
+    Line nr: 19
+    Result: Killed
+    Original line:
+                 require(msg.sender == _game, "Erc20_reward: only game can mint");
+
+    Mutated line:
+                 require(msg.sender != _game, "Erc20_reward: only game can mint");
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc20_reward.sol
+    Line nr: 14
+    Result: Killed
+    Original line:
+                 require(msg.sender == _owner, "Erc20_reward: restricted to owner");
+
+    Mutated line:
+                 require(msg.sender != _owner, "Erc20_reward: restricted to owner");
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc20_reward.sol
+    Line nr: 19
+    Result: Killed
+    Original line:
+                 require(msg.sender == _game, "Erc20_reward: only game can mint");
+
+    Mutated line:
+                 require(msg.sender != _game, "Erc20_reward: only game can mint");
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc20_reward.sol
+    Line nr: 20
+    Result: Killed
+    Original line:
+                 _mint(msg.sender, amount);
+
+    Mutated line:
+                 
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc20_reward.sol
+    Line nr: 9
+    Result: Equivalent
+    Original line:
+             constructor() ERC20("Reward token", "RWRD") {
+
+    Mutated line:
+             constructor()  {
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc721_staking.sol
+    Line nr: 17
+    Result: Killed
+    Original line:
+                     msg.value == PRICE,
+
+    Mutated line:
+                     msg.value != PRICE,
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc721_staking.sol
+    Line nr: 17
+    Result: Killed
+    Original line:
+                     msg.value == PRICE,
+
+    Mutated line:
+                     msg.value != PRICE,
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc721_staking.sol
+    Line nr: 22
+    Result: Error
+    Original line:
+                 tokenSupply += 1;
+
+    Mutated line:
+                 tokenSupply -= 1;
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc721_staking.sol
+    Line nr: 21
+    Result: Killed
+    Original line:
+                 _mint(msg.sender, tokenSupply);
+
+    Mutated line:
+                 
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Erc721_staking.sol
+    Line nr: 11
+    Result: Equivalent
+    Original line:
+             constructor() ERC721("staking token", "STK") {
+
+    Mutated line:
+             constructor()  {
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 31
+    Result: Killed
+    Original line:
+                 require(msg.sender == address(itemNft), "Game: we expected other nft");
+
+    Mutated line:
+                 require(msg.sender != address(itemNft), "Game: we expected other nft");
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 41
+    Result: Killed
+    Original line:
+                     msg.sender == originalOwner[tokenId],
+
+    Mutated line:
+                     msg.sender != originalOwner[tokenId],
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 51
+    Result: Killed
+    Original line:
+                     msg.sender == originalOwner[tokenId],
+
+    Mutated line:
+                     msg.sender != originalOwner[tokenId],
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 57
+    Result: Lived
+    Original line:
+                 if (rewardToClaim > 0) {
+
+    Mutated line:
+                 if (rewardToClaim >= 0) {
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 31
+    Result: Killed
+    Original line:
+                 require(msg.sender == address(itemNft), "Game: we expected other nft");
+
+    Mutated line:
+                 require(msg.sender != address(itemNft), "Game: we expected other nft");
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 41
+    Result: Killed
+    Original line:
+                     msg.sender == originalOwner[tokenId],
+
+    Mutated line:
+                     msg.sender != originalOwner[tokenId],
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 51
+    Result: Killed
+    Original line:
+                     msg.sender == originalOwner[tokenId],
+
+    Mutated line:
+                     msg.sender != originalOwner[tokenId],
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 57
+    Result: Killed
+    Original line:
+                 if (rewardToClaim > 0) {
+
+    Mutated line:
+                 if (rewardToClaim <= 0) {
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 55
+    Result: Killed
+    Original line:
+                 uint256 timePassed = block.timestamp - claimedTime[tokenId];
+
+    Mutated line:
+                 uint256 timePassed = block.timestamp + claimedTime[tokenId];
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 56
+    Result: Killed
+    Original line:
+                 uint256 rewardToClaim = (timePassed / STAKE_PERIOD) * CLAIM_REWARD;
+
+    Mutated line:
+                 uint256 rewardToClaim = (timePassed / STAKE_PERIOD) / CLAIM_REWARD;
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 56
+    Result: Killed
+    Original line:
+                 uint256 rewardToClaim = (timePassed / STAKE_PERIOD) * CLAIM_REWARD;
+
+    Mutated line:
+                 uint256 rewardToClaim = (timePassed * STAKE_PERIOD) * CLAIM_REWARD;
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 61
+    Result: Error
+    Original line:
+                     claimedTime[tokenId] = block.timestamp - unclaimedTime;
+
+    Mutated line:
+                     claimedTime[tokenId] = block.timestamp + unclaimedTime;
+
+
+Mutation:
+    File: /home/epershyn/Documents/rareSkills/nft-staking/contracts/Game.sol
+    Line nr: 58
+    Result: Killed
+    Original line:
+                     _sendReward(msg.sender, rewardToClaim);
+
+    Mutated line:

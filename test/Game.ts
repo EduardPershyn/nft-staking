@@ -21,17 +21,23 @@ describe("Staking Game", function () {
 
   beforeEach(async () => {
     const erc20RewardFactory = await ethers.getContractFactory("Erc20_reward");
-    erc20Reward = await erc20RewardFactory.deploy();
+    erc20Reward = await upgrades.deployProxy(erc20RewardFactory, {
+       initializer: "initialize",
+   });
     await erc20Reward.deployed();
 
     const erc721StakingFactory = await ethers.getContractFactory(
       "Erc721_staking"
     );
-    erc721Staking = await erc721StakingFactory.deploy();
+    erc721Staking = await upgrades.deployProxy(erc721StakingFactory, {
+        initializer: "initialize",
+    });
     await erc721Staking.deployed();
 
     const gameFactory = await ethers.getContractFactory("Game");
-    game = await gameFactory.deploy(erc721Staking.address, erc20Reward.address);
+    game = await upgrades.deployProxy(gameFactory, [erc721Staking.address, erc20Reward.address], {
+        initializer: "initialize",
+    });
     await game.deployed();
 
     accounts = await ethers.getSigners();
